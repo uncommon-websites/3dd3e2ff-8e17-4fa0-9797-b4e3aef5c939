@@ -1,5 +1,24 @@
 <script lang="ts">
 	import "../app.css";
+	import { onMount } from 'svelte';
+
+	let revealed = $state(false);
+	let currentTextIndex = $state(0);
+	const footerTexts = ["Support with design", "Coinvest", "Advise"];
+
+	onMount(() => {
+		// Trigger reveal animation after mount
+		setTimeout(() => {
+			revealed = true;
+		}, 100);
+
+		// Rotate footer text every 2 seconds
+		const interval = setInterval(() => {
+			currentTextIndex = (currentTextIndex + 1) % footerTexts.length;
+		}, 2000);
+
+		return () => clearInterval(interval);
+	});
 </script>
 
 <svelte:head>
@@ -21,28 +40,37 @@
 	<div class="flex-1 flex flex-col justify-center max-w-[900px]">
 		
 		<!-- Headline -->
-		<h1 class="text-2xl sm:text-3xl md:text-[2rem] leading-[1.35] font-semibold tracking-tight mb-8 text-black">
+		<h1 class={[
+			"text-2xl sm:text-3xl md:text-[2rem] leading-[1.35] font-semibold tracking-tight mb-8 text-black transition-all duration-1000",
+			revealed ? "blur-0 opacity-100" : "blur-sm opacity-0"
+		]}>
 			Thilo is <span class="inline-block bg-[#e5e5e5] px-2 py-0.5 font-semibold align-baseline">Uncommon</span> Founder, Partner and <span class="inline-block bg-[#e5e5e5] px-2 py-0.5 font-semibold align-baseline">Sequoia</span> Arc Advisor.
 		</h1>
 
 		<!-- Body Text -->
-		<div class="text-lg sm:text-xl md:text-[1.35rem] leading-[1.6] text-[#999999] font-normal tracking-tight">
+		<div class={[
+			"text-lg sm:text-xl md:text-[1.35rem] leading-[1.6] text-[#999999] font-normal tracking-tight transition-all duration-1000 delay-200",
+			revealed ? "blur-0 opacity-100" : "blur-sm opacity-0"
+		]}>
 			He invested, advised or designed 
 			{#each ["Mercor", "Delphi", "Squint", "Dash0", "CrewAI", "GradientLabs", "Build", "Fleet", "Medra", "nsave", "Ironbridge", "DiligenceSquared", "Lemni", "Morphic", "Compile", "Lapel", "Orbit", "Sensmore", "Nolla", "Luo", "Hero", "Popcorn", "Partykit", "Guided Energy", "Commerce Systems", "Claim", "Structify", "Snaptrude", "Superlinked", "Tilebox", "Amperecloud", "Equipme", "Documenso"] as company, i}
-				<span class="inline-block bg-[#f0f0f0] text-[#666666] px-1.5 py-0.5 align-baseline">{company}</span>{#if i < 32}<span>, </span>{/if}
+				<span class="inline-block bg-[#f0f0f0] text-[#666666] px-2 py-1 rounded align-baseline hover:bg-orange-500 hover:text-white transition-colors duration-200 cursor-pointer">{company}</span>{#if i < 32}<span>, </span>{/if}
 			{/each}
-			and <span class="inline-block bg-[#f0f0f0] text-[#666666] px-1.5 py-0.5 align-baseline">Era</span>, founded <span class="inline-block bg-[#f0f0f0] text-[#666666] px-1.5 py-0.5 align-baseline">Home</span>, worked at <span class="inline-block bg-[#f0f0f0] text-[#666666] px-1.5 py-0.5 align-baseline">Airbnb</span> in 2011 and studied architecture – DM anytime on <span class="inline-block bg-[#f0f0f0] text-[#666666] px-1.5 py-0.5 align-baseline">X</span> or <span class="inline-block bg-[#f0f0f0] text-[#666666] px-1.5 py-0.5 align-baseline">LinkedIn</span>.
+			and <span class="inline-block bg-[#f0f0f0] text-[#666666] px-2 py-1 rounded align-baseline hover:bg-orange-500 hover:text-white transition-colors duration-200 cursor-pointer">Era</span>, founded <span class="inline-block bg-[#f0f0f0] text-[#666666] px-2 py-1 rounded align-baseline hover:bg-orange-500 hover:text-white transition-colors duration-200 cursor-pointer">Home</span>, worked at <span class="inline-block bg-[#f0f0f0] text-[#666666] px-2 py-1 rounded align-baseline hover:bg-orange-500 hover:text-white transition-colors duration-200 cursor-pointer">Airbnb</span> in 2011 and studied architecture – DM anytime on <span class="inline-block bg-[#f0f0f0] text-[#666666] px-2 py-1 rounded align-baseline hover:bg-orange-500 hover:text-white transition-colors duration-200 cursor-pointer">X</span> or <span class="inline-block bg-[#f0f0f0] text-[#666666] px-2 py-1 rounded align-baseline hover:bg-orange-500 hover:text-white transition-colors duration-200 cursor-pointer">LinkedIn</span>.
 		</div>
 
 		<!-- CTA -->
-		<p class="mt-8 text-lg sm:text-xl md:text-[1.35rem] text-[#999999] font-normal tracking-tight">
+		<p class={[
+			"mt-8 text-lg sm:text-xl md:text-[1.35rem] text-[#999999] font-normal tracking-tight transition-all duration-1000 delay-500",
+			revealed ? "blur-0 opacity-100" : "blur-sm opacity-0"
+		]}>
 			How can we work together?
 		</p>
 	</div>
 
 	<!-- Footer -->
 	<div class="flex justify-between items-end mt-12 w-full">
-		<div class="text-[#cccccc] text-lg font-normal">Support with design</div>
+		<div class="text-[#cccccc] text-lg font-normal transition-opacity duration-300">{footerTexts[currentTextIndex]}</div>
 		<button class="w-12 h-12 bg-[#e5e5e5] rounded-full flex items-center justify-center hover:bg-[#d5d5d5] transition-colors cursor-pointer" aria-label="Next">
 			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#888888]">
 				<line x1="5" y1="12" x2="19" y2="12"></line>

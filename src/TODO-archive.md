@@ -22,3 +22,18 @@
 - [ ] Change body tag in app.html
 
 ──────────────────────────────────────────────────
+
+## Session: 2026-02-06T20:43:07.269Z
+
+<!-- DO NOT EDIT - Managed by todo_list tool -->
+<!-- Updated: 2026-02-06T20:42:48.177Z -->
+
+# Current Todo List State
+
+- [ ] Refine spacing in div
+- [ ] Make grey bg with round corners
+- [ ] Add reveal blur effect to lines
+- [ ] Switch text to 'support, coinvest, advise'
+- [ ] Make links bg orange on hover
+
+──────────────────────────────────────────────────
